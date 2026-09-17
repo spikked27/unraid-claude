@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>claude-code</Name>
+  <Repository>ghcr.io/spikked27/unraid-claude:latest</Repository>
+  <Registry>https://github.com/spikked27/unraid-claude/pkgs/container/unraid-claude</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/spikked27/unraid-claude/issues</Support>
+  <Project>https://github.com/spikked27/unraid-claude</Project>
+  <Overview>Claude Code with Remote Control, so you can chat with Claude from the Claude phone app (Code tab) and have it diagnose and manage the Docker containers on this server. Uses your Claude Pro/Max subscription login, not API credits. After installing, open this container's Console and run: claude-setup[br][br]WARNING: mounting the Docker socket gives this container effective root access to your server. Protect your Claude account with 2FA.</Overview>
+  <Description>Runs Claude Code (Anthropic's agentic coding tool) with Remote Control enabled, so you can open the Claude mobile app or claude.ai/code and talk to a Claude session that lives on your Unraid server. With the Docker socket mapped it can read container logs, inspect configs, troubleshoot problems and write Unraid templates for new apps. It signs in with your own Claude Pro or Max subscription (no API key). After installing, open the container Console and run claude-setup.[br][br]Security: the Docker socket grants root-equivalent control of the host. Enable 2FA on your Claude account and keep the permission mode on default so changes require your approval.</Description>
+  <Category>Tools:Utilities</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/spikked27/unraid-claude/main/templates/claude-code.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/spikked27/unraid-claude/main/icon.png</Icon>
+  <ExtraParams>--hostname=unraid-claude --restart=unless-stopped</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>A Claude Pro or Max subscription. Run claude-setup from the container console after first start.</Requires>
+  <Config Name="Config / home" Target="/config" Default="/mnt/user/appdata/claude-code" Mode="rw" Description="Claude login, settings, installed Claude Code binary and the workspace (CLAUDE.md lives in /config/workspace)." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/claude-code</Config>
+  <Config Name="Docker socket" Target="/var/run/docker.sock" Default="/var/run/docker.sock" Mode="rw" Description="Lets Claude see and manage your containers. Remove this to give Claude no Docker access." Type="Path" Display="always" Required="false" Mask="false">/var/run/docker.sock</Config>
+  <Config Name="User shares (read-only)" Target="/mnt/user" Default="/mnt/user" Mode="ro,slave" Description="All user shares at the same path as the host, read-only. Change to rw,slave only if you want Claude to be able to modify share contents." Type="Path" Display="always" Required="false" Mask="false">/mnt/user</Config>
+  <Config Name="Appdata (read-write)" Target="/mnt/user/appdata" Default="/mnt/user/appdata" Mode="rw,slave" Description="Container configs, writable so Claude can fix app settings (it is instructed to back up and ask first)." Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata</Config>
+  <Config Name="Unraid user templates" Target="/boot/config/plugins/dockerMan/templates-user" Default="/boot/config/plugins/dockerMan/templates-user" Mode="rw" Description="Lets Claude write Unraid container templates (my-*.xml) that you then add via Docker > Add Container." Type="Path" Display="always" Required="false" Mask="false">/boot/config/plugins/dockerMan/templates-user</Config>
+  <Config Name="Host logs (read-only)" Target="/var/log" Default="/var/log" Mode="ro" Description="Unraid syslog and other host logs for diagnostics." Type="Path" Display="advanced" Required="false" Mask="false">/var/log</Config>
+  <Config Name="Remote Control session name" Target="RC_SESSION_NAME" Default="Unraid" Mode="" Description="Name shown in the Claude app's Code session list." Type="Variable" Display="always" Required="false" Mask="false">Unraid</Config>
+  <Config Name="Permission mode" Target="PERMISSION_MODE" Default="default" Mode="" Description="default = Claude asks you (on your phone) before edits and non-allowlisted commands. acceptEdits = file edits auto-approved. Leave on default unless you know you want otherwise." Type="Variable" Display="always" Required="false" Mask="false">default</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User ID to run as (99 = nobody)." Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group ID to run as (100 = users)." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="Extra remote-control args" Target="RC_EXTRA_ARGS" Default="" Mode="" Description="Extra flags passed to 'claude remote-control', e.g. --capacity 4 or --verbose." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>

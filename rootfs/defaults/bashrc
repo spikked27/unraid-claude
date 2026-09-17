@@ -1,0 +1,3 @@
+export PATH=/config/.local/bin:$PATH
+cd /config/workspace 2>/dev/null
+echo "Claude container helpers: claude-setup | claude-attach | claude-shell"

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Attach to the running Remote Control screen (detach with Ctrl-b then d).
+if [ "$(id -u)" = "0" ]; then
+    exec gosu claude env HOME=/config tmux attach -t claude
+fi
+exec tmux attach -t claude

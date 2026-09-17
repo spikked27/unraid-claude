@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker ps:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker inspect:*)",
+      "Bash(docker stats --no-stream:*)",
+      "Bash(docker images:*)",
+      "Bash(docker network ls:*)",
+      "Bash(docker network inspect:*)",
+      "Bash(docker volume ls:*)",
+      "Bash(docker port:*)",
+      "Bash(docker top:*)",
+      "Bash(docker info:*)",
+      "Bash(docker version:*)",
+      "Bash(df:*)",
+      "Bash(du:*)",
+      "Bash(free:*)",
+      "Bash(uptime:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(tail:*)",
+      "Bash(grep:*)"
+    ],
+    "deny": [
+      "Bash(docker system prune:*)",
+      "Bash(docker volume prune:*)",
+      "Bash(docker volume rm:*)",
+      "Bash(docker image prune:*)"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<CommunityApplications>
+  <Profile>Unraid template for claude-code: Claude Code with Remote Control, so you can manage and troubleshoot your Unraid Docker containers by chatting with Claude from your phone. Requires your own Claude Pro or Max subscription. Support and issues: GitHub issues on this repository.</Profile>
+  <Icon>https://raw.githubusercontent.com/spikked27/unraid-claude/main/icon.png</Icon>
+  <WebPage>https://github.com/spikked27/unraid-claude</WebPage>
+</CommunityApplications>

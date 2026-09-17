@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# One-time interactive setup: login, trust the workspace, accept Remote Control.
+if [ "$(id -u)" = "0" ]; then
+    exec gosu claude env HOME=/config PATH="/config/.local/bin:$PATH" "$0" "$@"
+fi
+export HOME=/config
+export PATH=/config/.local/bin:$PATH
+cd /config/workspace || exit 1
+
+cat <<'TXT'
+
+=== Step 1 of 3: Sign in with your Claude subscription (Pro/Max) ===
+Choose the claude.ai / subscription option, NOT an API key.
+A URL will be shown: open it on any device, approve, and paste the code back here.
+
+TXT
+read -rp "Press Enter to continue..." _
+claude auth login || { echo "Login failed - run claude-setup again."; exit 1; }
+
+cat <<'TXT'
+
+=== Step 2 of 3: Trust the workspace folder ===
+Claude will open in /config/workspace. Accept the "trust this folder" prompt,
+optionally say hi, then type /exit to come back here.
+
+TXT
+read -rp "Press Enter to continue..." _
+claude
+
+cat <<'TXT'
+
+=== Step 3 of 3: Start Remote Control ===
+Restarting the Remote Control server and attaching to it.
+If asked "Enable Remote Control? (y/n)", press y.
+Press SPACE to show a QR code for your phone.
+When you're done, detach with Ctrl-b then d (it keeps running in the background).
+
+TXT
+read -rp "Press Enter to continue..." _
+pkill -u "$(id -u)" -f "claude remote-control" 2>/dev/null
+sleep 2
+exec tmux attach -t claude

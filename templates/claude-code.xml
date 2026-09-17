@@ -15,7 +15,7 @@
   <WebUI/>
   <TemplateURL>https://raw.githubusercontent.com/spikked27/unraid-claude/main/templates/claude-code.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/spikked27/unraid-claude/main/icon.png</Icon>
-  <ExtraParams>--hostname=unraid-claude --restart=unless-stopped</ExtraParams>
+  <ExtraParams>--hostname=unraid-claude --restart=unless-stopped --memory=2g</ExtraParams>
   <PostArgs/>
   <CPUset/>
   <DonateText/>

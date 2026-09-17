@@ -65,7 +65,7 @@ manage the Docker containers on the server (e.g. set up Tdarr). Must:
   /config <- /mnt/user/appdata/claude-code (rw); /var/run/docker.sock (rw); /mnt/user (ro,slave);
   /mnt/user/appdata (rw,slave); /boot/config/plugins/dockerMan/templates-user (rw);
   /var/log (ro, advanced). Vars: RC_SESSION_NAME=Unraid, PERMISSION_MODE=default, PUID, PGID,
-  RC_EXTRA_ARGS. ExtraParams: --hostname=unraid-claude --restart=unless-stopped.
+  RC_EXTRA_ARGS. ExtraParams: --hostname=unraid-claude --restart=unless-stopped --memory=2g.
 - `ca_profile.xml`, `LICENSE` (MIT), `icon.png` (generic terminal/server icon, not a brand logo).
 - `.github/workflows/build.yml`: build linux/amd64, push ghcr.io/<repo>:latest + semver + sha tags,
   on push to main (ignores md/templates/icon/license changes), v* tags, weekly cron, manual dispatch.
@@ -81,6 +81,10 @@ manage the Docker containers on the server (e.g. set up Tdarr). Must:
   `docker run`, so they stay editable in the Unraid GUI.
 - Default permission mode stays `default` (approve on phone). Docker socket = root-equivalent;
   mounting it read-only does NOT restrict the API.
+- Container has a `--memory=2g` cap in ExtraParams (good practice to always bound container memory
+  on Unraid). Raise it in the template/container's Extra Parameters field if Claude's workload needs
+  more headroom (e.g. large repo operations); OOM-kill under the cap shows up as the container
+  restarting unexpectedly.
 
 ## Unverified assumptions to check on first real run
 - `Bash(cmd:*)` permission rule syntax still accepted by current Claude Code.
